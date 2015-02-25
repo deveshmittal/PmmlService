@@ -5,7 +5,10 @@ import io.dropwizard.Configuration;
 public class PmmlConfiguration extends Configuration {
 
 	public PmmlConfiguration() {
-		// TODO Auto-generated constructor stub
+	}
+
+	public String getPmmlFileLocation() {
+		return "C:\\work\\projects\\PmmlHandler\\src\\main\\resources\\pmml";
 	}
 
 }

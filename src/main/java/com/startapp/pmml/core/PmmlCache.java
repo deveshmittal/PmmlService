@@ -20,11 +20,16 @@ import org.xml.sax.InputSource;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 public class PmmlCache {
 	private final Path path;
+	private final PmmlLoaderJob pmmlLoaderJob;
 
-	public PmmlCache(String pmmlFileLocation) {
+	@Inject
+	public PmmlCache(PmmlLoaderJob pmmlLoaderJob, @Named("pmmlFilesLocation")String pmmlFileLocation) {
+		this.pmmlLoaderJob = pmmlLoaderJob;
 		path = FileSystems.getDefault().getPath(pmmlFileLocation);
 	}
 

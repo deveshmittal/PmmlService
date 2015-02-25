@@ -4,25 +4,38 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-import com.startapp.pmml.core.PmmlCache;
-import com.startapp.pmml.resources.PmmlResource;
+import com.fiestacabin.dropwizard.quartz.ManagedScheduler;
+import com.google.inject.Injector;
+import com.hubspot.dropwizard.guice.GuiceBundle;
+import com.startapp.pmml.core.PmmlModule;
+import com.startapp.pmml.core.schedule.ScheduleModule;
 
 public class PmmlApplication extends Application<PmmlConfiguration> {
+	private GuiceBundle<PmmlConfiguration> guiceBundle;
 
 	public PmmlApplication() {
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		new PmmlApplication().run(args);
 	}
 
 	@Override
 	public void initialize(Bootstrap<PmmlConfiguration> bootstrap) {
-		
+		//@formatter:off
+		guiceBundle = GuiceBundle.<PmmlConfiguration> newBuilder()
+				.addModule(new ScheduleModule())
+				.addModule(new PmmlModule())
+				.enableAutoConfig(getClass().getPackage().getName())
+				.setConfigClass(PmmlConfiguration.class)
+				.build();
+		//@formatter:on
+		bootstrap.addBundle(guiceBundle);
 	}
 
 	@Override
 	public void run(PmmlConfiguration configuration, Environment environment) throws Exception {
-		environment.jersey().register(new PmmlResource(new PmmlCache("C:\\work\\projects\\PmmlHandler\\src\\main\\resources\\pmml")));
+		Injector injector = guiceBundle.getInjector();
+	    environment.lifecycle().manage(injector.getInstance(ManagedScheduler.class));
 	}
 }

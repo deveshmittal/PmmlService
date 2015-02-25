@@ -11,12 +11,14 @@ import javax.ws.rs.core.MediaType;
 import org.jpmml.evaluator.Evaluator;
 
 import com.codahale.metrics.annotation.Timed;
+import com.google.inject.Inject;
 import com.startapp.pmml.core.PmmlCache;
 
 @Path("/pmml")
 public class PmmlResource {
 	private final PmmlCache pmmlCache;
 
+	@Inject
 	public PmmlResource(PmmlCache pmmlCache) {
 		this.pmmlCache = pmmlCache;
 	}
