@@ -7,8 +7,10 @@ import io.dropwizard.setup.Environment;
 import com.fiestacabin.dropwizard.quartz.ManagedScheduler;
 import com.google.inject.Injector;
 import com.hubspot.dropwizard.guice.GuiceBundle;
+import com.startapp.pmml.core.PmmlCache;
 import com.startapp.pmml.core.PmmlModule;
 import com.startapp.pmml.core.schedule.ScheduleModule;
+import com.startapp.pmml.health.CacheFullHealth;
 
 public class PmmlApplication extends Application<PmmlConfiguration> {
 	private GuiceBundle<PmmlConfiguration> guiceBundle;
@@ -37,5 +39,6 @@ public class PmmlApplication extends Application<PmmlConfiguration> {
 	public void run(PmmlConfiguration configuration, Environment environment) throws Exception {
 		Injector injector = guiceBundle.getInjector();
 	    environment.lifecycle().manage(injector.getInstance(ManagedScheduler.class));
+	    environment.healthChecks().register("pmmlCache", new CacheFullHealth(injector.getInstance(PmmlCache.class)));
 	}
 }
