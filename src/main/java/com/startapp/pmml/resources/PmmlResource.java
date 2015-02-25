@@ -12,8 +12,10 @@ import org.jpmml.evaluator.Evaluator;
 
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.startapp.pmml.core.PmmlCache;
 
+@Singleton
 @Path("/pmml")
 public class PmmlResource {
 	private final PmmlCache pmmlCache;

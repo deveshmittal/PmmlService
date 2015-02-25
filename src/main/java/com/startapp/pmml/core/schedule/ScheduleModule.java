@@ -15,14 +15,11 @@ public class ScheduleModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		// we don't even need this because we scan all project
-//		bind(SchedulerConfiguration.class).toInstance(new SchedulerConfiguration(PmmlLoaderJob.class.getPackage().getName()));
-//		bind(ManagedScheduler.class);
 	}
 
 	@Provides
 	@Singleton
-	private Scheduler provideScheduler() throws SchedulerException {
+	public Scheduler provideScheduler() throws SchedulerException {
 		return StdSchedulerFactory.getDefaultScheduler();
 	}
 }

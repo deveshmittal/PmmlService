@@ -13,11 +13,10 @@ public class PmmlModule extends AbstractModule {
 	@Override
 	protected void configure() {
 	}
-	
+
 	@Provides
 	@Named("pmmlFilesLocation")
 	public String provideTemplate(PmmlConfiguration configuration) {
 		return configuration.getPmmlFileLocation();
 	}
-
 }
