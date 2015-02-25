@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'gradle-one-jar'
 apply plugin: 'application'
+apply plugin: 'eu.appsatori.fatjar'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -11,25 +11,24 @@ targetCompatibility = 1.8
 mainClassName = 'com.startapp.pmml.PmmlApplication'
 
 buildscript {
-	repositories { mavenCentral() }
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+	
 	dependencies {
-		classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+		classpath "eu.appsatori:gradle-fatjar-plugin:0.3"
 	}
 }
 
 version = '1.0'
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'StartApp PMML Service', 'Implementation-Version': version
-    }
-}
 
 repositories { mavenCentral() }
 
 dependencies {
 	compile 'com.google.guava:guava:18.0'
-//	compile 'org.mongodb:mongo-java-driver:2.+'
-//	compile 'org.mongodb.morphia:morphia:0.109'
+	//	compile 'org.mongodb:mongo-java-driver:2.+'
+	//	compile 'org.mongodb.morphia:morphia:0.109'
 	compile 'io.dropwizard:dropwizard-core:0.7.1'
 	compile 'org.apache.commons:commons-lang3:3.3.2'
 	compile 'org.jpmml:pmml-evaluator:1.1.16'
@@ -41,12 +40,18 @@ dependencies {
 	testCompile 'org.mockito:mockito-all:1.+'
 }
 
-task oneJar(type: OneJar) {
-	mainClass = mainClassName
-	archiveName = 'pmml-service.jar'
-	mergeManifestFromJar = true
+fatJar {
+	exclude "META-INF/*.SF"
+	exclude "META-INF/*.DSA"
+	exclude "META-INF/*.RSA"
+
+	manifest {
+		attributes 'Main-Class': mainClassName,
+		'Implementation-Title': 'StartApp-PMML-Service',
+		'Implementation-Version': version
+	}
 }
 
 run { args 'server', './src/main/resources/config/pmml-service.yml' }
 
-artifacts { oneJar }
+artifacts { fatJar }
