@@ -7,3 +7,5 @@ server:
   adminConnectors:
     - type: http
       port: 10091
+      
+pmmlFilesLocation: C:\\work\\projects\\PmmlHandler\\src\\main\\resources\\pmml

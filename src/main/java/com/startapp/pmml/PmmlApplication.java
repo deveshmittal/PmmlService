@@ -1,6 +1,7 @@
 package com.startapp.pmml;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -33,12 +34,18 @@ public class PmmlApplication extends Application<PmmlConfiguration> {
 				.build();
 		//@formatter:on
 		bootstrap.addBundle(guiceBundle);
+//
+//		
+//		
+//		bootstrap.addBundle(new AssetServlet("/assets/css", "/css", null, "css"));
+		bootstrap.addBundle(new AssetsBundle());
+//		bootstrap.addBundle(new AssetsBundle("/assets/fonts", "/fonts", null, "fonts"));
 	}
 
 	@Override
 	public void run(PmmlConfiguration configuration, Environment environment) throws Exception {
 		Injector injector = guiceBundle.getInjector();
-	    environment.lifecycle().manage(injector.getInstance(ManagedScheduler.class));
-	    environment.healthChecks().register("pmmlCache", new CacheFullHealth(injector.getInstance(PmmlCache.class)));
+		environment.lifecycle().manage(injector.getInstance(ManagedScheduler.class));
+		environment.healthChecks().register("pmmlCache", new CacheFullHealth(injector.getInstance(PmmlCache.class)));
 	}
 }

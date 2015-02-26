@@ -22,14 +22,17 @@ buildscript {
 }
 
 version = '1.0'
+//dropwizardversion = '0.7.1'
 
 repositories { mavenCentral() }
+
 
 dependencies {
 	compile 'com.google.guava:guava:18.0'
 	//	compile 'org.mongodb:mongo-java-driver:2.+'
 	//	compile 'org.mongodb.morphia:morphia:0.109'
 	compile 'io.dropwizard:dropwizard-core:0.7.1'
+	compile 'io.dropwizard:dropwizard-assets:0.7.1'
 	compile 'org.apache.commons:commons-lang3:3.3.2'
 	compile 'org.jpmml:pmml-evaluator:1.1.16'
 	compile 'com.fiestacabin.dropwizard.quartz:dropwizard-quartz:0.7.1'

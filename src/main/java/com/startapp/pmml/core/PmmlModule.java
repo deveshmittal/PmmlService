@@ -17,6 +17,6 @@ public class PmmlModule extends AbstractModule {
 	@Provides
 	@Named("pmmlFilesLocation")
 	public String provideTemplate(PmmlConfiguration configuration) {
-		return configuration.getPmmlFileLocation();
+		return configuration.getPmmlFilesLocation();
 	}
 }
