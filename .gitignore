@@ -17,3 +17,6 @@ hs_err_pid*
 
 # Ignore Gradle GUI config
 gradle-app.setting
+
+#JRebel
+rebel.xml

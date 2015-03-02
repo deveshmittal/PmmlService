@@ -1,10 +1,10 @@
 package com.startapp.pmml.health;
 
-import com.codahale.metrics.health.HealthCheck;
 import com.google.inject.Inject;
+import com.hubspot.dropwizard.guice.InjectableHealthCheck;
 import com.startapp.pmml.core.PmmlCache;
 
-public class CacheFullHealth extends HealthCheck {
+public class CacheFullHealth extends InjectableHealthCheck {
 	private final PmmlCache pmmlCache;
 
 	@Inject
@@ -21,4 +21,8 @@ public class CacheFullHealth extends HealthCheck {
 		}
 	}
 
+	@Override
+	public String getName() {
+		return "pmmlCache";
+	}
 }
